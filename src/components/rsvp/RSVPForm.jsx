@@ -132,9 +132,13 @@ export default function RSVPForm({ embedded = false }) {
         setLoading(false);
         return;
       }
-      const normalise = (s) => s.trim().toLowerCase().replace(/\s+/g, ' ');
+      const normalise = (s) => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
+      const getNameField = (g) => {
+        const key = Object.keys(g).find(k => k.toLowerCase() === 'name');
+        return key ? g[key] : '';
+      };
       const alreadyRegistered = existing.some(
-        (g) => normalise(g.name || '') === normalise(trimmedName)
+        (g) => normalise(getNameField(g)) === normalise(trimmedName)
       );
       if (alreadyRegistered) {
         setFieldErrors({ name: 'This name has already been registered.' });

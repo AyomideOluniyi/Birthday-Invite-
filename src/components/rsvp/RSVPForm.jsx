@@ -2,7 +2,7 @@ import { useState } from 'react';
 import WaxSealButton from '../ui/WaxSealButton';
 import FamilyMemberInput from './FamilyMemberInput';
 import SuccessScreen from './SuccessScreen';
-import { submitRSVP } from '../../lib/sheets';
+import { submitRSVP, fetchGuests } from '../../lib/sheets';
 
 const MAX_FAMILY = 6;
 
@@ -124,6 +124,16 @@ export default function RSVPForm({ embedded = false }) {
       ? familyMembers.filter((m) => m.trim()).join(', ')
       : '';
     try {
+      const existing = await fetchGuests().catch(() => []);
+      const normalise = (s) => s.trim().toLowerCase().replace(/\s+/g, ' ');
+      const alreadyRegistered = existing.some(
+        (g) => normalise(g.name || '') === normalise(trimmedName)
+      );
+      if (alreadyRegistered) {
+        setFieldErrors({ name: 'This name has already been registered.' });
+        setLoading(false);
+        return;
+      }
       await submitRSVP({ name: trimmedName, phone: trimmedPhone, family_members: members });
       setSuccess(true);
     } catch {

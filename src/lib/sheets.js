@@ -20,5 +20,19 @@ export async function fetchGuests() {
   const res = await fetch('/api/guests');
   if (!res.ok) throw new Error('Failed to fetch guest list');
   const data = await res.json();
-  return Array.isArray(data) ? data : data.data || [];
+
+  const rows = Array.isArray(data) ? data : data.data || [];
+  if (!rows.length) return [];
+
+  // Sheet returns array-of-arrays: first row is headers, rest is data
+  if (Array.isArray(rows[0])) {
+    const headers = rows[0].map(h => String(h).trim().toLowerCase());
+    return rows.slice(1).map(row => {
+      const obj = {};
+      headers.forEach((h, i) => { obj[h] = row[i]; });
+      return obj;
+    });
+  }
+
+  return rows;
 }

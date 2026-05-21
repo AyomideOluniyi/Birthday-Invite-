@@ -17,10 +17,7 @@ export async function submitRSVP({ name, phone, family_members }) {
 }
 
 export async function fetchGuests() {
-  const res = await fetch(`${SHEET_URL}?action=read`, {
-    method: 'GET',
-  });
-
+  const res = await fetch('/api/guests');
   if (!res.ok) throw new Error('Failed to fetch guest list');
   const data = await res.json();
   return Array.isArray(data) ? data : data.data || [];

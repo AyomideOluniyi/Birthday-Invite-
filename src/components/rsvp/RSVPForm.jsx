@@ -124,7 +124,14 @@ export default function RSVPForm({ embedded = false }) {
       ? familyMembers.filter((m) => m.trim()).join(', ')
       : '';
     try {
-      const existing = await fetchGuests().catch(() => []);
+      let existing;
+      try {
+        existing = await fetchGuests();
+      } catch {
+        setSubmitError('Unable to verify registration status. Please try again.');
+        setLoading(false);
+        return;
+      }
       const normalise = (s) => s.trim().toLowerCase().replace(/\s+/g, ' ');
       const alreadyRegistered = existing.some(
         (g) => normalise(g.name || '') === normalise(trimmedName)

@@ -132,7 +132,7 @@ export default function RSVPForm({ embedded = false }) {
         setLoading(false);
         return;
       }
-      const normalise = (s) => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
+      const normalise = (s) => String(s).toLowerCase().replace(/[^a-z]/g, ' ').replace(/\s+/g, ' ').trim();
       const getNameField = (g) => {
         const key = Object.keys(g).find(k => k.toLowerCase() === 'name');
         return key ? g[key] : '';

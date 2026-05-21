@@ -697,30 +697,32 @@ export default function InvitePage() {
                 We look forward to celebrating with you
               </p>
 
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                marginTop: '1rem',
-                padding: '0.35rem 0.85rem',
-                borderRadius: '999px',
-                border: '1px solid rgba(212,175,55,0.3)',
-                background: 'rgba(212,175,55,0.07)',
-              }}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <circle cx="6" cy="6" r="5.25" stroke="#D4AF37" strokeWidth="1" strokeOpacity="0.7"/>
-                  <text x="6" y="8.5" textAnchor="middle" fill="#D4AF37" fontSize="5.5" fontFamily="Inter,sans-serif" fontWeight="600" opacity="0.9">!</text>
-                </svg>
-                <span style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(212,175,55,0.8)',
-                  fontWeight: 500,
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '999px',
+                  border: '1px solid rgba(212,175,55,0.3)',
+                  background: 'rgba(212,175,55,0.07)',
                 }}>
-                  18+ only
-                </span>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <circle cx="6" cy="6" r="5.25" stroke="#D4AF37" strokeWidth="1" strokeOpacity="0.7"/>
+                    <text x="6" y="8.5" textAnchor="middle" fill="#D4AF37" fontSize="5.5" fontFamily="Inter,sans-serif" fontWeight="600" opacity="0.9">!</text>
+                  </svg>
+                  <span style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(212,175,55,0.8)',
+                    fontWeight: 500,
+                    whiteSpace: 'nowrap',
+                  }}>
+                    18+ only
+                  </span>
+                </div>
               </div>
             </div>
 

@@ -132,16 +132,28 @@ export default function RSVPForm({ embedded = false }) {
         setLoading(false);
         return;
       }
-      const normalise = (s) => String(s).toLowerCase().replace(/[^a-z]/g, ' ').replace(/\s+/g, ' ').trim();
-      const getNameField = (g) => {
-        const key = Object.keys(g).find(k => k.toLowerCase() === 'name');
+      const normaliseName = (s) => String(s).toLowerCase().replace(/[^a-z]/g, ' ').replace(/\s+/g, ' ').trim();
+      const normalisePhone = (s) => String(s).replace(/\D/g, '').slice(-10);
+      const getField = (g, field) => {
+        const key = Object.keys(g).find(k => k.toLowerCase() === field);
         return key ? g[key] : '';
       };
-      const alreadyRegistered = existing.some(
-        (g) => normalise(getNameField(g)) === normalise(trimmedName)
+
+      const nameMatch = existing.some(
+        (g) => normaliseName(getField(g, 'name')) === normaliseName(trimmedName)
       );
-      if (alreadyRegistered) {
+      const phoneMatch = trimmedPhone.length >= 7 && existing.some((g) => {
+        const stored = normalisePhone(getField(g, 'phone'));
+        return stored.length >= 7 && stored === normalisePhone(trimmedPhone);
+      });
+
+      if (nameMatch) {
         setFieldErrors({ name: 'This name has already been registered.' });
+        setLoading(false);
+        return;
+      }
+      if (phoneMatch) {
+        setFieldErrors({ phone: 'This phone number has already been registered.' });
         setLoading(false);
         return;
       }
